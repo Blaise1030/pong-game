@@ -93,7 +93,6 @@ function onBallHitsSlowDown(gs: GameState): GameState {
     }
   })
 }
-
 function updatePaddle1Pos(gs: GameState, yVal: number): GameState {
   return ({
     ...gs, uiStates:
@@ -209,29 +208,8 @@ function spawnSlowMyBall(): Observable<SlowMyBall> {
 }
 function playerMouse(): Observable<Paddle1YChanges> {
   return fromEvent<MouseEvent>(document.getElementById('canvas'), 'mousemove')
-    .pipe(map(({ clientY }) => new Paddle1YChanges(clientY-105)))
+    .pipe(map(({ clientY }) => new Paddle1YChanges(clientY - 105)))
 }
-
-function pong() {
-  const stream = merge(
-    playerMouse(),
-    paddle2Engine(),
-    ballEngine(),
-    spawnPaddleUpgrade(),
-    spawnSlowMyBall())
-    .pipe(scan(reduceGameState, initialGameState()))
-    .subscribe((e: GameState) => renderEngine(e, 'canvas')
-      .forEach((e: Element) => document.getElementById('canvas').appendChild(e))
-    );
-}
-export default pong;
-
-if (typeof window != 'undefined')
-  window.onload = () => {
-    pong();
-  }
-
-
 function updateBallPos(gs: GameState): GameState {
   /* Updates the ball positions for the function reduceGameState */
   if (uiStateAccess(gs, 'ballState', 'cx') > uiStateAccess(gs, 'paddleSizeIncreaseState', 'x') &&
@@ -261,11 +239,10 @@ function updateBallPos(gs: GameState): GameState {
     }
   };
 }
-
 function someoneScores(gs: GameState): GameState {
-  if (gs.uiStates.ballState.cx < 0 && gs.computerScore+1===9)
+  if (gs.uiStates.ballState.cx < 0 && gs.computerScore + 1 === 9)
     return initialGameState()
-  else if (gs.uiStates.ballState.cx > 0 && gs.playerScore+1===9)
+  else if (gs.uiStates.ballState.cx > 0 && gs.playerScore + 1 === 9)
     return initialGameState()
   return gs.uiStates.ballState.cx < 0 ? {
     uiStates: {
@@ -291,5 +268,24 @@ function someoneScores(gs: GameState): GameState {
       playerScore: gs.playerScore + 1, computerScore: gs.computerScore
     }
 }
+function pong() {
+  merge(
+    playerMouse(),
+    paddle2Engine(),
+    ballEngine(),
+    spawnPaddleUpgrade(),
+    spawnSlowMyBall())
+    .pipe(scan(reduceGameState, initialGameState()))
+    .subscribe((e: GameState) => renderEngine(e, 'canvas')
+      .forEach((e: Element) => document.getElementById('canvas').appendChild(e))
+    );
+}
+export default pong;
+
+if (typeof window != 'undefined')
+  window.onload = () => {
+    pong();
+  }
+
 
 
