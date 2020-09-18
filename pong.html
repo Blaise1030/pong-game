@@ -1,18 +1,42 @@
 <html>
-    <head>
-        <style>
-            @import url(style.css);
-            p.highlight {
-                color: red;
-            }
-            svg {
-                background-color: rgb(41, 41, 36);
-            }
-        </style>
-        <script src="./dist/pong.js"></script>
-    </head>
-    <body>
-        <h1>Pong</h1>
-        <svg id="canvas" width="600" height="600"/>
-    </body>
+
+<head>
+    <style>
+        @import url(style.css);
+
+        p.highlight {
+            color: red;
+        }
+
+        svg {
+            background-color: rgb(41, 41, 36);
+            border-color: white;
+            border-radius: 5px;
+            border-style: solid;
+            border-width: 5px;
+        }
+
+        svg {
+            position: relative;
+        }
+
+        body {
+            background-color: rgb(41, 41, 36);
+        }
+
+        h1,
+        p,
+        h3,
+        h5,
+        h6 {
+            color: white;
+        }
+    </style>
+    <script src="./dist/pong.js"></script>
+</head>
+
+<body>
+    <svg id="canvas" width="700" height="500" />
+</body>
+
 </html>
