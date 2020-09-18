@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "anymatch": "^3.1.1",
+    "node": "^14.10.1",
     "rxjs": "^6.6.0"
   }
 }
